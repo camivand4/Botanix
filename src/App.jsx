@@ -11,7 +11,8 @@ import { Device } from './pages/device/Device';
 import DeviceDetail from './pages/device/DeviceDetail';
 import { NewDevice } from './pages/device/NewDevice';
 import SignIn from './components/auth/SignIn';
-import SignUp from './components/auth/SIgnUp';
+import SignUp from './components/auth/SignUp';
+import AuthDetails from './components/auth/AuthDetails';
 
 const theme = createTheme({
   palette: {
@@ -49,6 +50,7 @@ function App() {
         <Route path='/readmore' element={<ReadMore />}/>
         <Route path='/auth' element={<SignIn />}/>
         <Route path='/auth2' element={<SignUp />}/>
+        <Route path='/auth3' element={<AuthDetails />}/>
   
         <Route path='/devices' element={<Device />} />
         <Route path='/devices/:id' element={<DeviceDetail />} />

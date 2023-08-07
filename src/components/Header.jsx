@@ -34,6 +34,7 @@ const pages = [
   { url: '/devices/new', title: 'new device' },
   { url: '/auth', title: 'auth' },
   { url: '/auth2', title: 'auth2' },
+  { url: '/auth3', title: 'auth3' },
 ];
 
 function Header() {
