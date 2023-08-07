@@ -61,9 +61,6 @@ const DeviceDetail = () => {
 
     const handleSave = () => {
         setIsEditMode(false);
-        // Add logic here to save the changes to the server or update the state,
-        // depending on your implementation. For simplicity, we'll just update the local
-        // state directly in this example.
         setDevice((prevDevice) => ({
             ...prevDevice,
             humidity: humidityEditValue, // Update the actual humidity value when saving changes
@@ -83,8 +80,6 @@ const DeviceDetail = () => {
     };
 
     const handleBack = () => {
-        // You can implement custom logic to handle navigation when going back. For
-        // simplicity, we'll just use window.history.back() here.
         window
             .history
             .back();

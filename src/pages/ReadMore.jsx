@@ -35,7 +35,7 @@ const ReadMore = () => {
                 </p>
                 <Button
                     variant="contained"
-                    href="https://github.com/your-username/your-repo-name"
+                    href="https://github.com/camivand4/PCB-planter"
                     target="_blank"
                     rel="noopener"
                     sx={{
