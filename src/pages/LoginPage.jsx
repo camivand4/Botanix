@@ -8,9 +8,13 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 
 export const LoginPage = () => {
+
+  const handleGoogleSignIn = async () => {
+
+  };
+
   return (
     < >
       <CssBaseline />
@@ -57,6 +61,22 @@ export const LoginPage = () => {
             >
               Sign In
             </Button>
+            
+            <Button
+              fullWidth
+              variant="contained"
+              onClick={handleGoogleSignIn}
+              sx={{
+                mt: 3,
+                mb: 2,
+                backgroundColor: 'secondary.main',
+                color: 'primary.main',
+                '&:hover': { color: 'white' },
+              }}
+            >
+              Sign In with Google
+             </Button>
+
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">

@@ -3,6 +3,7 @@ import Header from './components/Header';
 import { Home } from './pages/Home';
 import { LoginPage } from './pages/LoginPage';
 import { Test } from './pages/Test';
+import { AuthPage } from './pages/AuthPage';
 // import { BrowserRouter as Route, Link, createBrowserRouter, createRoutesFromElements, Outlet, RouterProvider} from "react-router-dom";
 import { BrowserRouter as Router, Route, Link, Outlet, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 import { createTheme, ThemeProvider, Box } from '@mui/material';
@@ -11,7 +12,6 @@ import ReadMore from './pages/ReadMore';
 import { Device } from './pages/device/Device';
 import DeviceDetail from './pages/device/DeviceDetail';
 import { NewDevice } from './pages/device/NewDevice';
-import ArduinoCommunication from './pages/ArduinoCommunication';
 
 const theme = createTheme({
   palette: {
@@ -47,10 +47,11 @@ function App() {
         <Route path='/register' element={<RegisterPage />}/>
         <Route path='/test' element={<Test />}/>
         <Route path='/readmore' element={<ReadMore />}/>
-        <Route path='/arduinoCommunication' element={<ArduinoCommunication />}/>
+        <Route path='/auth' element={<AuthPage />} />
   
         <Route path='/devices' element={<Device />} />
         <Route path='/devices/:id' element={<DeviceDetail />} />
+        <Route path='/devices/new' element={<NewDevice />} />
         <Route path='/devices/new' element={<NewDevice />} />
       </Route>
     )

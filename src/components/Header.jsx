@@ -32,7 +32,7 @@ const pages = [
   { url: '/devices', title: 'devices' },
   { url: '/devices/1', title: 'device detail' },
   { url: '/devices/new', title: 'new device' },
-  { url: '/arduinoCommunication', title: 'Arduino' }
+  { url: '/auth', title: 'auth' },
 ];
 
 function Header() {
@@ -168,6 +168,7 @@ function Header() {
               <Avatar alt="Remy Sharp" src="/images/2.jpg" />
             </IconButton>
           </Box>
+          logged in user here
         </Toolbar>
       </Container>
     </AppBar>
