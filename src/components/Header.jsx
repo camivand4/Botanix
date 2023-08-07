@@ -31,7 +31,8 @@ const pages = [
   { url: '/readmore', title: 'read more' },
   { url: '/devices', title: 'devices' },
   { url: '/devices/1', title: 'device detail' },
-  { url: '/devices/new', title: 'new device' }
+  { url: '/devices/new', title: 'new device' },
+  { url: '/arduinoCommunication', title: 'Arduino' }
 ];
 
 function Header() {
