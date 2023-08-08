@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,6 +11,8 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { Link, useLocation } from 'react-router-dom';
+import { auth } from "../firebase.js";
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 // Add a new class for links without underline
 const linkStyle = {
@@ -25,21 +27,19 @@ const activeLinkStyle = {
 
 const pages = [
   { url: '/', title: 'home' },
-  { url: '/login', title: 'login' },
-  { url: '/register', title: 'register' },
   { url: '/test', title: 'test' },
   { url: '/readmore', title: 'read more' },
   { url: '/devices', title: 'devices' },
   { url: '/devices/1', title: 'device detail' },
   { url: '/devices/new', title: 'new device' },
-  { url: '/auth', title: 'auth' },
-  { url: '/auth2', title: 'auth2' },
-  { url: '/auth3', title: 'auth3' },
+
 ];
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const [ authUser, setAuthUser ] = useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -48,6 +48,27 @@ function Header() {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
+  useEffect(() => {
+    const listen = onAuthStateChanged(auth, (user) => {
+        if (user) {
+            setAuthUser(user);
+        } else {
+            setAuthUser(null);
+        }
+    });
+
+    return () => {
+        listen();
+    }
+}, []);
+
+const userSignOut = () => {
+  signOut(auth).then(() => {
+      console.log("User signed out");
+  }).catch(error => console.log(error));
+}
+
 
   // Get the current location from React Router
   const location = useLocation();
@@ -165,12 +186,35 @@ function Header() {
               </Link>
             ))}
           </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            <IconButton sx={{ p: 0 }}>
-              <Avatar alt="Remy Sharp" src="/images/2.jpg" />
-            </IconButton>
-          </Box>
-          logged in user here
+          {authUser ? (
+  <Button
+    variant="contained"
+    onClick={userSignOut}
+    sx={{
+      backgroundColor: 'secondary.main',
+      color: 'primary.main',
+      '&:hover': { color: 'white' },
+      marginRight: '1rem', // Use camelCase for style properties
+    }}
+  >
+    Sign out
+  </Button>
+) : (
+  <Link to="/login" style={linkStyle}>
+    <Button
+      variant="contained"
+      sx={{
+        backgroundColor: 'secondary.main',
+        color: 'primary.main',
+        '&:hover': { color: 'white' },
+        marginRight: '1rem', // Use camelCase for style properties
+      }}
+    >
+      Login
+    </Button>
+  </Link>
+)}
+
         </Toolbar>
       </Container>
     </AppBar>

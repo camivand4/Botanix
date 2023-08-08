@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -8,8 +8,22 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { auth } from "../firebase.js";
+import { signInWithEmailAndPassword } from '@firebase/auth';
 
 export const LoginPage = () => {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const signIn = (e) => {
+      e.preventDefault();
+      signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+          console.log(userCredential);
+      }).catch((error) => {
+          console.log(error);
+      })
+  }
 
   const handleGoogleSignIn = async () => {
 
@@ -22,7 +36,9 @@ export const LoginPage = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box component="form" noValidate sx={{ mt: 1 }}>
+        <form 
+        sx={{ mt: 1 }}
+        onSubmit={signIn}>
           <TextField
             margin="normal"
             required
@@ -32,6 +48,8 @@ export const LoginPage = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             margin="normal"
@@ -42,10 +60,8 @@ export const LoginPage = () => {
             type="password"
             id="password"
             autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)}
           />
             <Button
               type="submit"
@@ -78,18 +94,13 @@ export const LoginPage = () => {
              </Button>
 
           <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
             <Grid item>
               <Link href="register" variant="body2">
                 Don't have an account? Sign Up
               </Link>
             </Grid>
           </Grid>
-        </Box>
+        </form>
       </Box>
     </>
   )
