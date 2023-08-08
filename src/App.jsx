@@ -38,6 +38,20 @@ const theme = createTheme({
 });
 
 function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user); // Updates user state based on authentication status
+    });
+
+    return () => {
+      unsubscribe(); // Clean up the auth state listener
+    };
+  }, []);
+
+    const auth = getAuth();
 
   const router = createBrowserRouter(
     createRoutesFromElements(

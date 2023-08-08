@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Button, Paper, Box, Slider, TextField } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { v4 as uuid } from 'uuid';
+import { auth } from "../../firebase.js";
+import { onAuthStateChanged } from 'firebase/auth';
 
 export const NewDevice = () => {
-  const initialDevice = {
-    name: '',
-    frequency: 'Daily',
-    plantName: '',
-    humidity: 1,
-    wateringTime: '08:00 AM',
-    extraInfo1: '',
-    extraInfo2: '',
-  };
+  const [authUser, setAuthUser] = useState(null);
+  const [device, setDevice] = useState(null); // Initialize device to null initially
+  const [isEditMode, setIsEditMode] = useState(true);
 
   const marks = [
     { value: 1, label: 'Low' },
@@ -21,15 +18,54 @@ export const NewDevice = () => {
     { value: 5, label: 'Custom 2' },
   ];
 
-  const [device, setDevice] = useState(initialDevice);
-  const [isEditMode, setIsEditMode] = useState(true); // Start with edit mode enabled for a new device
+  useEffect(() => {
+    const listen = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setAuthUser(user);
 
-  const handleSave = () => {
-    setIsEditMode(false);
-    // Add logic here to save the new device to the server or update the state,
-    // depending on your implementation. For simplicity, we'll just reset the form
-    // here.
-    setDevice(initialDevice);
+        // Initialize the device with user's ID
+        const initialDevice = {
+          id: uuid().slice(0, 8),
+          userId: user.uid,
+          name: '',
+          frequency: 'Daily',
+          plantName: '',
+          humidity: 1,
+          wateringTime: '08:00 AM',
+        };
+
+        setDevice(initialDevice);
+      } else {
+        setAuthUser(null);
+      }
+    });
+
+    return () => {
+      listen();
+    };
+  }, []);
+
+  const handleSave = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/devices', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(device),
+      });
+
+      if (response.ok) {
+        // Device creation was successful
+        console.log('Device created successfully.');
+        setIsEditMode(false);
+        setDevice(initialDevice);
+      } else {
+        console.log('Error creating device.');
+      }
+    } catch (error) {
+      console.error('Error creating device:', error);
+    }
   };
 
   const handleChange = (event) => {
@@ -41,10 +77,13 @@ export const NewDevice = () => {
   };
 
   const handleBack = () => {
-    // You can implement custom logic to handle navigation when going back. For
-    // simplicity, we'll just use window.history.back() here.
     window.history.back();
   };
+
+  // Don't attempt to render if device is not initialized yet
+  if (!device) {
+    return null;
+  }
 
   return (
     <Box
@@ -79,7 +118,6 @@ export const NewDevice = () => {
           mx: 'auto',
         }}
       >
-        {/* Paper Part 1: Save Button */}
         <Box sx={{ display: 'flex', width: '100%', justifyContent: 'flex-end' }}>
           {isEditMode && (
             <Button variant="outlined" color="primary" onClick={handleSave}>
@@ -87,9 +125,25 @@ export const NewDevice = () => {
             </Button>
           )}
         </Box>
-
-        {/* Paper Part 2: Device Data */}
         <Box sx={{ p: '1rem', mt: '1rem', width: '100%' }}>
+        <Typography component="div" variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
+            Device Name:{' '}
+            {isEditMode ? (
+              <TextField
+                name="name"
+                value={device.name}
+                onChange={handleChange}
+                sx={{
+                  ml: '1rem',
+                  minWidth: '20vw',
+                  mb: '1rem'
+                }}
+              />
+            ) : (
+              device.name
+            )}
+          </Typography>
+          
           <Typography component="div" variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
             Plant Name:{' '}
             {isEditMode ? (
@@ -103,9 +157,10 @@ export const NewDevice = () => {
                 }}
               />
             ) : (
-              device.plantName
+              device.name
             )}
           </Typography>
+
           <Typography
             component="div"
             sx={{ display: 'flex', alignItems: 'center', ml: '1rem', mt: '1rem' }}
@@ -155,7 +210,7 @@ export const NewDevice = () => {
                 step={1}
                 min={1}
                 max={5}
-                disabled // Disable the slider during view mode
+                disabled
                 sx={{
                   ml: '1rem',
                   minWidth: '15vw',
@@ -183,44 +238,7 @@ export const NewDevice = () => {
               device.wateringTime
             )}
           </Typography>
-          <Typography
-            component="div"
-            sx={{ display: 'flex', alignItems: 'center', ml: '1rem', mt: '1rem' }}
-          >
-            Extra Info 1:{' '}
-            {isEditMode ? (
-              <TextField
-                name="extraInfo1"
-                value={device.extraInfo1}
-                onChange={handleChange}
-                sx={{
-                  ml: '1rem',
-                  minWidth: '20vw',
-                }}
-              />
-            ) : (
-              device.extraInfo1
-            )}
-          </Typography>
-          <Typography
-            component="div"
-            sx={{ display: 'flex', alignItems: 'center', ml: '1rem', mt: '1rem' }}
-          >
-            Extra Info 2:{' '}
-            {isEditMode ? (
-              <TextField
-                name="extraInfo2"
-                value={device.extraInfo2}
-                onChange={handleChange}
-                sx={{
-                  ml: '1rem',
-                  minWidth: '20vw',
-                }}
-              />
-            ) : (
-              device.extraInfo2
-            )}
-          </Typography>
+          {/* Add additional input fields here */}
         </Box>
       </Paper>
     </Box>

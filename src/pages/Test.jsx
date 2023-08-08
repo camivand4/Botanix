@@ -1,35 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLoaderData } from "react-router-dom";
-
-export const dataFetcher = async () => {
-    try {
-      const response = await fetch('http://localhost:3000/devices');
-      const data = await response.json();
-  
-      if (response.ok) {
-        // If the response status is in the range 200-299 (success status codes)
-        return {
-          data: data,
-          status: response.status,
-        };
-      } else {
-        // If the response status is not in the success range
-        return {
-          data: [],
-          status: response.status,
-          message: `Error: ${response.status} - ${response.statusText}`,
-        };
-      }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      return {
-        data: [],
-        status: error.status || 500,
-        message: error.message || 'Internal Server Error',
-      };
-    }
-  };
-  
+import { dataFetcher } from '../components/DataFetcher.js';
 
   export const Test = () => {
     const [data, setData] = useState([]);

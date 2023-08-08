@@ -27,11 +27,8 @@ const activeLinkStyle = {
 
 const pages = [
   { url: '/', title: 'home' },
-  { url: '/test', title: 'test' },
   { url: '/readmore', title: 'read more' },
   { url: '/devices', title: 'devices' },
-  { url: '/devices/1', title: 'device detail' },
-  { url: '/devices/new', title: 'new device' },
 
 ];
 
