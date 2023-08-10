@@ -7,7 +7,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 
 export const NewDevice = () => {
   const [authUser, setAuthUser] = useState(null);
-  const [device, setDevice] = useState(null); // Initialize device to null initially
+  const [device, setDevice] = useState(null);
   const [isEditMode, setIsEditMode] = useState(true);
 
   const marks = [
@@ -23,7 +23,6 @@ export const NewDevice = () => {
       if (user) {
         setAuthUser(user);
 
-        // Initialize the device with user's ID
         const initialDevice = {
           id: uuid().slice(0, 8),
           userId: user.uid,
@@ -238,7 +237,6 @@ export const NewDevice = () => {
               device.wateringTime
             )}
           </Typography>
-          {/* Add additional input fields here */}
         </Box>
       </Paper>
     </Box>
