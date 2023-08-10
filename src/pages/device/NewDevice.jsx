@@ -59,6 +59,7 @@ export const NewDevice = () => {
         console.log('Device created successfully.');
         setIsEditMode(false);
         setDevice(initialDevice);
+        window.location.href = '/devices/';
       } else {
         console.log('Error creating device.');
       }
