@@ -29,8 +29,6 @@ const pages = [
   { url: '/', title: 'home' },
   { url: '/readmore', title: 'read more' },
   { url: '/devices', title: 'devices' },
-  { url: '/test', title: 'test' },
-
 ];
 
 function Header() {
@@ -70,6 +68,8 @@ const userSignOut = () => {
 
   // Get the current location from React Router
   const location = useLocation();
+
+console.log(authUser)
 
   return (
     <AppBar id="header">
@@ -132,14 +132,16 @@ const userSignOut = () => {
                 }
               }}
             >
-              {pages.map((page) => (
-                <Link key={page.url} to={page.url} style={linkStyle}>
-                  <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page.title}</Typography>
-                  </MenuItem>
-                </Link>
-              ))}
-            </Menu>
+            {pages.map((page) => (
+              // Check if the page is "devices" and user is authenticated
+              (page.url === '/devices' && !authUser) ? null :
+              <Link key={page.url} to={page.url} style={linkStyle}>
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page.title}</Typography>
+                </MenuItem>
+              </Link>
+            ))}
+          </Menu>
             <Box
               sx={{
                 maxWidth: '8rem',
@@ -165,7 +167,10 @@ const userSignOut = () => {
               }
             }}
           >
+
             {pages.map((page) => (
+              (page.url === '/devices' && !authUser) ? null :
+
               <Link
                 key={page.url}
                 to={page.url}

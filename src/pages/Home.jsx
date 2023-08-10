@@ -48,6 +48,7 @@ export const Home = () => {
                         click on the "                    <Button
                         type="submit"
                         variant="contained"
+                        href="/readmore"
                         sx={{
                         mt: 3,
                         mb: 2,
@@ -140,34 +141,6 @@ the process.
                     mx: 'auto',
                     mt: '5vh'
                 }}>
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        sx={{
-                        mt: 3,
-                        mb: 2,
-                        backgroundColor: 'secondary.main',
-                        color: 'primary.main',
-                        '&:hover': {
-                            color: 'white'
-                        }
-                    }}>
-                        Sign In
-                    </Button>
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        sx={{
-                        mt: 3,
-                        mb: 2,
-                        backgroundColor: 'secondary.main',
-                        color: 'primary.main',
-                        '&:hover': {
-                            color: 'white'
-                        }
-                    }}>
-                        Read more
-                    </Button>
                 </Box>
             </Box>
         </Box>
