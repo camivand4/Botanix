@@ -79,7 +79,7 @@ export const LoginPage = () => {
               Sign In
             </Button>
             
-            <Button
+            {/* <Button
               fullWidth
               variant="contained"
               onClick={handleGoogleSignIn}
@@ -92,7 +92,7 @@ export const LoginPage = () => {
               }}
             >
               Sign In with Google
-             </Button>
+             </Button> */}
 
           <Grid container>
             <Grid item>
