@@ -201,7 +201,7 @@ const DeviceDetail = () => {
 export default DeviceDetail;
 
 async function getDeviceData(id) {
-    const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}${id}`);
+    const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/${id}`);
     if (response.ok) {
         const deviceData = await response.json();
         return deviceData;
@@ -211,7 +211,7 @@ async function getDeviceData(id) {
 }
 
 async function updateDeviceData(id, updatedDevice) {
-    const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
