@@ -5,7 +5,6 @@ export const dataFetcher = async () => {
   
       if (response.ok) {
         // If the response status is in the range 200-299 (success status codes)
-        console.log(data)
         return {
           data: data,
           status: response.status,

@@ -65,7 +65,7 @@ function App() {
         <Route path='/devices' element={<Device />} />
         <Route path='/devices/:id' element={<DeviceDetail />} />
         <Route path='/devices/new' element={<NewDevice />} />
-        <Route path='/devices/new' element={<NewDevice />} />
+
       </Route>
     )
   );
