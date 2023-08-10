@@ -1,10 +1,11 @@
 export const dataFetcher = async () => {
     try {
-      const response = await fetch(import.meta.env.VITE_REACT_APP_API);
+      const response = await fetch("https://13.53.41.118/devices");
       const data = await response.json();
   
       if (response.ok) {
         // If the response status is in the range 200-299 (success status codes)
+        console.log(data)
         return {
           data: data,
           status: response.status,

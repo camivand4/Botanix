@@ -8,5 +8,12 @@ export default defineConfig({
     mimeTypes: {
       'js': 'application/javascript; charset=utf-8',
     },
+    proxy: {
+      '/api': {
+        target: 'https://13.53.41.118',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '/devices')
+      }
+    }
   },
 });
