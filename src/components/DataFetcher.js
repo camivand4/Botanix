@@ -1,6 +1,6 @@
 export const dataFetcher = async () => {
     try {
-      const response = await fetch("https://13.53.41.118/devices");
+      const response = await fetch(import.meta.env.VITE_REACT_APP_API);
       const data = await response.json();
   
       if (response.ok) {

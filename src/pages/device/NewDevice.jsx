@@ -47,7 +47,7 @@ export const NewDevice = () => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch('http://localhost:3000/devices', {
+      const response = await fetch(import.meta.env.VITE_REACT_APP_API, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

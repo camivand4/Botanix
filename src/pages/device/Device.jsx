@@ -35,7 +35,7 @@ export const Device = () => {
 
   const handleDelete = async (deviceId) => {
     try {
-      const response = await fetch(`http://localhost:3000/devices/${deviceId}`, {
+      const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}${deviceId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
