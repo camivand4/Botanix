@@ -14,6 +14,8 @@ export const Test = () => {
     }, []);
 
     return (
-        <div>{data ? data.title : 'Loading...'}</div>
+        <div>{data ? data.title : 'Loading...'}
+        {import.meta.env.VITE_REACT_APP_API}
+        </div>
     )
 }
