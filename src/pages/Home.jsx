@@ -17,12 +17,12 @@ export const Home = () => {
                 height: '92vh',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                backgroundImage: `url('./images/bghome.jpg')`,
+                backgroundImage: `url('./images/bghome-min.jpg')`,
                 '@media (min-width: 768px)': {
-                    backgroundImage: `url('./images/bghome.jpg')`
+                    backgroundImage: `url('./images/bghome-min.jpg')`
                 },
                 '@media (min-width: 1440px)': {
-                    backgroundImage: `url('./images/bghome.jpg')`
+                    backgroundImage: `url('./images/bghome-min.jpg')`
                 }
             }}>
                 <Box
