@@ -29,6 +29,7 @@ const pages = [
   { url: '/', title: 'home' },
   { url: '/readmore', title: 'read more' },
   { url: '/devices', title: 'devices' },
+  { url: '/test', title: 'test' },
 
 ];
 
