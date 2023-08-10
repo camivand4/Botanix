@@ -1,6 +1,6 @@
 export const dataFetcher = async () => {
     try {
-      const response = await fetch(import.meta.env.VITE_REACT_APP_API,);
+      const response = await fetch(import.meta.env.VITE_REACT_APP_API);
       const data = await response.json();
   
       if (response.ok) {
