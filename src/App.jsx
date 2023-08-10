@@ -59,7 +59,6 @@ function App() {
         <Route index element={<Home />}/>
         <Route path='/login' element={<LoginPage />}/>
         <Route path='/register' element={<RegisterPage />}/>
-        <Route path='/test' element={<Test />}/>
         <Route path='/readmore' element={<ReadMore />}/>
   
         <Route path='/devices' element={<Device />} />
