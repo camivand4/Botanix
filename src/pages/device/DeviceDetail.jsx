@@ -118,6 +118,9 @@ const DeviceDetail = () => {
                         </Button>
                     ) : (
                         <>
+                            <Button variant="outlined" disabled color="primary">
+                                ID: {device.id}
+                            </Button>
                             <Button variant="outlined" color="primary" startIcon={<EditIcon />} onClick={handleEdit}>
                                 Edit
                             </Button>
