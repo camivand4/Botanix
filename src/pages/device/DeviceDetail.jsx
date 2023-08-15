@@ -7,6 +7,10 @@ import {
     Box,
     Slider,
     TextField,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -106,17 +110,12 @@ const DeviceDetail = () => {
                     <ArrowBackIcon />
                 </Button>
             </Box>
-            <Paper sx={{ p: '1rem', width: '50%', display: 'flex', flexDirection: 'column', alignItems: 'left', mx: 'auto' }}>
-                <Box sx={{ display: 'flex', width: '100%', gap: '1rem', justifyContent: 'flex-end' }}>
-                    <Button variant="outlined" disabled>
-                        Device ID: {device.id}
-                    </Button>
+            <Paper sx={{ p: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'left', mx: 'auto' }}>
+                <Box sx={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end', mb: '1rem' }}>
                     {isEditMode ? (
-                        <>
-                            <Button variant="outlined" color="primary" startIcon={<EditIcon />} onClick={handleSave}>
-                                Save
-                            </Button>
-                        </>
+                        <Button variant="outlined" color="primary" startIcon={<EditIcon />} onClick={handleSave}>
+                            Save
+                        </Button>
                     ) : (
                         <>
                             <Button variant="outlined" color="primary" startIcon={<EditIcon />} onClick={handleEdit}>
@@ -129,69 +128,87 @@ const DeviceDetail = () => {
                     )}
                 </Box>
 
-                <Box sx={{ p: '1rem', mt: '1rem', width: '100%' }}>
-                    <Typography component="div" variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
-                        Device Name:{' '}
-                        {isEditMode ? (
+                <Box sx={{ p: '1rem', width: '95%' }}>
+                    <TextField
+                        name="name"
+                        label="Device Name"
+                        value={device.name}
+                        onChange={handleChange}
+                        sx={{ mb: '1rem', width: '100%' }}
+                        disabled={!isEditMode}
+                    />
+                    <TextField
+                        name="plantName"
+                        label="Plant Name"
+                        value={device.plantName}
+                        onChange={handleChange}
+                        sx={{ mb: '1rem', width: '100%' }}
+                        disabled={!isEditMode}
+                    />
+                    <TextField
+                        name="litersPerHour"
+                        type="number"
+                        label="Pump L/H"
+                        value={device.litersPerHour}
+                        onChange={handleChange}
+                        sx={{ mb: '1rem', width: '100%' }}
+                        disabled={!isEditMode}
+                    />
+                    <FormControl sx={{ mb: '1rem', width: '100%' }}>
+                        <InputLabel>Mode</InputLabel>
+                        <Select
+                            name="mode"
+                            value={device.mode}
+                            onChange={handleChange}
+                            disabled={!isEditMode}
+                        >
+                            <MenuItem value="humidity">Humidity</MenuItem>
+                            <MenuItem value="time">Time</MenuItem>
+                        </Select>
+                    </FormControl>
+                    {device.mode === 'humidity' ? (
+                        <>
                             <TextField
-                                name="name"
-                                value={device.name}
+                                name="dryDays"
+                                type="number"
+                                label="Dry Days"
+                                value={device.dryDays}
                                 onChange={handleChange}
-                                sx={{ ml: '1rem', minWidth: '20vw', mb: '1rem' }}
+                                sx={{ mb: '1rem', width: '100%' }}
+                                disabled={!isEditMode}
                             />
-                        ) : (
-                            device.name
-                        )}
-                    </Typography>
-
-                    <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
-                        Plant Name:{' '}
-                        {isEditMode ? (
                             <TextField
-                                name="plantName"
-                                value={device.plantName}
+                                name="amountOfWater"
+                                type="number"
+                                label="Amount of Water"
+                                value={device.amountOfWater}
                                 onChange={handleChange}
-                                sx={{ ml: '1rem', minWidth: '20vw' }}
+                                sx={{ mb: '1rem', width: '100%' }}
+                                disabled={!isEditMode}
                             />
-                        ) : (
-                            device.plantName
-                        )}
-                    </Typography>
-
-                    <Typography sx={{ display: 'flex', alignItems: 'center', ml: '1rem', mt: '1rem' }}>
-                        <ScheduleIcon sx={{ mr: 1 }} />
-                        Frequency:{' '}
-                        {isEditMode ? (
+                        </>
+                    ) : (
+                        <>
                             <TextField
-                                name="frequency"
-                                value={device.frequency}
+                                name="daysWithNoWater"
+                                type="number"
+                                label="Days with No Water"
+                                value={device.daysWithNoWater}
                                 onChange={handleChange}
-                                sx={{ ml: '1rem', minWidth: '20vw' }}
+                                sx={{ mb: '1rem', width: '100%' }}
+                                disabled={!isEditMode}
                             />
-                        ) : (
-                            device.frequency
-                        )}
-                    </Typography>
-
-                    <Typography sx={{ display: 'flex', alignItems: 'center', ml: '1rem' }}>
-                        <WaterDropIcon sx={{ mr: 1 }} />
-                        Humidity: {isEditMode ? humiditySlider : humiditySlider}
-                    </Typography>
-
-                    <Typography sx={{ display: 'flex', alignItems: 'center', ml: '1rem', mt: '1rem' }}>
-                        <ScheduleIcon sx={{ mr: 1 }} />
-                        Watering Time:{' '}
-                        {isEditMode ? (
                             <TextField
-                                name="wateringTime"
-                                value={device.wateringTime}
+                                name="amountOfWater"
+                                type="number"
+                                label="Amount of Water"
+                                value={device.amountOfWater}
                                 onChange={handleChange}
-                                sx={{ ml: '1rem', minWidth: '20vw' }}
+                                sx={{ mb: '1rem', width: '100%' }}
+                                disabled={!isEditMode}
                             />
-                        ) : (
-                            device.wateringTime
-                        )}
-                    </Typography>
+                        </>
+                    )}
                 </Box>
             </Paper>
         </Box>

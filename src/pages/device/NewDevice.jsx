@@ -1,8 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Button, Paper, Box, Slider, TextField } from '@mui/material';
+import {
+  Typography,
+  Button,
+  Paper,
+  Box,
+  Slider,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Grid,
+} from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { v4 as uuid } from 'uuid';
-import { auth } from "../../firebase.js";
+import { auth } from '../../firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 
 export const NewDevice = () => {
@@ -10,13 +22,6 @@ export const NewDevice = () => {
   const [device, setDevice] = useState(null);
   const [isEditMode, setIsEditMode] = useState(true);
 
-  const marks = [
-    { value: 1, label: 'Low' },
-    { value: 2, label: 'Medium' },
-    { value: 3, label: 'High' },
-    { value: 4, label: 'Custom 1' },
-    { value: 5, label: 'Custom 2' },
-  ];
 
   useEffect(() => {
     const listen = onAuthStateChanged(auth, (user) => {
@@ -27,10 +32,12 @@ export const NewDevice = () => {
           id: uuid().slice(0, 8),
           userId: user.uid,
           name: '',
-          frequency: 'Daily',
           plantName: '',
-          humidity: 1,
-          wateringTime: '08:00 AM',
+          litersPerHour: 1,
+          mode: 'humidity',
+          dryDays: 1,
+          amountOfWater: 1,
+          daysWithNoWater: 1,
         };
 
         setDevice(initialDevice);
@@ -58,7 +65,7 @@ export const NewDevice = () => {
         // Device creation was successful
         console.log('Device created successfully.');
         setIsEditMode(false);
-        setDevice(initialDevice);
+        // setDevice(initialDevice);
         window.location.href = '/devices/';
       } else {
         console.log('Error creating device.');
@@ -111,133 +118,151 @@ export const NewDevice = () => {
       <Paper
         sx={{
           p: '1rem',
-          width: '50%',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'left',
+          alignItems: 'center',
           mx: 'auto',
         }}
       >
-        <Box sx={{ display: 'flex', width: '100%', justifyContent: 'flex-end' }}>
+        <Box sx={{ width: '100%', justifyContent: 'flex-end' }}>
           {isEditMode && (
             <Button variant="outlined" color="primary" onClick={handleSave}>
               Save
             </Button>
           )}
         </Box>
-        <Box sx={{ p: '1rem', mt: '1rem', width: '100%' }}>
-        <Typography component="div" variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
-            Device Name:{' '}
-            {isEditMode ? (
-              <TextField
-                name="name"
-                value={device.name}
-                onChange={handleChange}
-                sx={{
-                  ml: '1rem',
-                  minWidth: '20vw',
-                  mb: '1rem'
-                }}
-              />
-            ) : (
-              device.name
-            )}
-          </Typography>
-          
-          <Typography component="div" variant="h6" sx={{ display: 'flex', alignItems: 'center' }}>
-            Plant Name:{' '}
-            {isEditMode ? (
-              <TextField
-                name="plantName"
-                value={device.plantName}
-                onChange={handleChange}
-                sx={{
-                  ml: '1rem',
-                  minWidth: '20vw',
-                }}
-              />
-            ) : (
-              device.name
-            )}
-          </Typography>
-
-          <Typography
-            component="div"
-            sx={{ display: 'flex', alignItems: 'center', ml: '1rem', mt: '1rem' }}
-          >
-            Frequency:{' '}
-            {isEditMode ? (
-              <TextField
-                name="frequency"
-                value={device.frequency}
-                onChange={handleChange}
-                sx={{
-                  ml: '1rem',
-                  minWidth: '20vw',
-                }}
-              />
-            ) : (
-              device.frequency
-            )}
-          </Typography>
-          <Typography
-            component="div"
-            sx={{ display: 'flex', alignItems: 'center', ml: '1rem', mt: '1rem' }}
-          >
-            Humidity:{' '}
-            {isEditMode ? (
-              <Slider
-                name="humidity"
-                value={device.humidity}
-                marks={marks}
-                valueLabelDisplay="auto"
-                step={1}
-                min={1}
-                max={5}
-                onChange={(e, value) => setDevice((prevDevice) => ({ ...prevDevice, humidity: value }))}
-                sx={{
-                  ml: '1rem',
-                  minWidth: '15vw',
-                  maxWidth: '25vw',
-                }}
-              />
-            ) : (
-              <Slider
-                name="humidity"
-                value={device.humidity}
-                marks={marks}
-                valueLabelDisplay="auto"
-                step={1}
-                min={1}
-                max={5}
-                disabled
-                sx={{
-                  ml: '1rem',
-                  minWidth: '15vw',
-                  maxWidth: '25vw',
-                }}
-              />
-            )}
-          </Typography>
-          <Typography
-            component="div"
-            sx={{ display: 'flex', alignItems: 'center', ml: '1rem', mt: '1rem' }}
-          >
-            Watering Time:{' '}
-            {isEditMode ? (
-              <TextField
-                name="wateringTime"
-                value={device.wateringTime}
-                onChange={handleChange}
-                sx={{
-                  ml: '1rem',
-                  minWidth: '20vw',
-                }}
-              />
-            ) : (
-              device.wateringTime
-            )}
-          </Typography>
+        <Box sx={{ p: '1rem', width: '100%', textAlign: 'left' }}>
+          <TextField
+            name="name"
+            label="Device Name"
+            value={device.name}
+            onChange={handleChange}
+            sx={{ mb: '1rem', width: '100%' }}
+          />
+          <TextField
+            name="plantName"
+            label="Plant Name"
+            value={device.plantName}
+            onChange={handleChange}
+            sx={{ mb: '1rem', width: '100%' }}
+          />
+          <TextField
+            name="litersPerHour"
+            label="Pump L/H"
+            type="number"
+            value={device.litersPerHour}
+            onChange={handleChange}
+            InputProps={{
+              endAdornment: (
+                <Typography variant="body2" color="textSecondary" component="span">
+                  L/H
+                </Typography>
+              ),
+            }}
+            sx={{ mb: '1rem', width: '100%' }}
+          />
+          <FormControl sx={{ width: '100%', mb: '1rem' }}>
+            <InputLabel>Mode</InputLabel>
+            <Select
+              name="mode"
+              value={device.mode}
+              onChange={handleChange}
+            >
+              <MenuItem value="humidity">Humidity</MenuItem>
+              <MenuItem value="time">Time</MenuItem>
+            </Select>
+          </FormControl>
+          {device.mode === 'humidity' ? (
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <TextField
+                  name="dryDays"
+                  label="Dry Days"
+                  type="number"
+                  value={device.dryDays}
+                  onChange={handleChange}
+                  InputProps={{
+                    endAdornment: (
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="span"
+                      >
+                        days
+                      </Typography>
+                    ),
+                  }}
+                  sx={{ width: '100%' }}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  name="amountOfWater"
+                  label="Amount of Water"
+                  type="number"
+                  value={device.amountOfWater}
+                  onChange={handleChange}
+                  InputProps={{
+                    endAdornment: (
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="span"
+                      >
+                        L
+                      </Typography>
+                    ),
+                  }}
+                  sx={{ width: '100%' }}
+                />
+              </Grid>
+            </Grid>
+          ) : (
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <TextField
+                  name="daysWithNoWater"
+                  label="Days with No Water"
+                  type="number"
+                  value={device.daysWithNoWater}
+                  onChange={handleChange}
+                  InputProps={{
+                    endAdornment: (
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="span"
+                      >
+                        days
+                      </Typography>
+                    ),
+                  }}
+                  sx={{ width: '100%' }}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  name="amountOfWater"
+                  label="Amount of Water"
+                  type="number"
+                  value={device.amountOfWater}
+                  onChange={handleChange}
+                  InputProps={{
+                    endAdornment: (
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="span"
+                      >
+                        L
+                      </Typography>
+                    ),
+                  }}
+                  sx={{ width: '100%' }}
+                />
+              </Grid>
+            </Grid>
+          )}
         </Box>
       </Paper>
     </Box>
