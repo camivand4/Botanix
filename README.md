@@ -6,6 +6,9 @@ https://13.53.41.118/devices/
 // WEBSITE ON:
 https://botanix.vercel.app/
 
+// GITHUB ON:
+https://github.com/camivand4/arduinoBotanix
+
 
 Step 1: Clone the Git Repository
 
