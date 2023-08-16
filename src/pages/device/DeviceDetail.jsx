@@ -183,7 +183,7 @@ const DeviceDetail = () => {
                             <TextField
                                 name="amountOfWater"
                                 type="number"
-                                label="Amount of Water"
+                                label="Amount of Water in Liter"
                                 value={device.amountOfWater}
                                 onChange={handleChange}
                                 sx={{ mb: '1rem', width: '100%' }}

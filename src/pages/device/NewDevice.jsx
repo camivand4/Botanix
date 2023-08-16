@@ -198,7 +198,7 @@ export const NewDevice = () => {
               <Grid item xs={6}>
                 <TextField
                   name="amountOfWater"
-                  label="Amount of Water"
+                  label="Amount of Water in liter"
                   type="number"
                   value={device.amountOfWater}
                   onChange={handleChange}
