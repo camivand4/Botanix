@@ -67,7 +67,7 @@ const ReadMore = () => {
                 </p>
                 <Button
                     variant="contained"
-                    href="https://www.printables.com/"
+                    href="https://www.printables.com/model/552924-automatic-planter/"
                     target="_blank"
                     rel="noopener"
                     sx={{
